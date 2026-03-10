@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duality of Mathematical Reciprocity</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg-deep: #080c12;
+    --bg-surface: #0e1319;
+    --bg-elevated: #151c26;
+    --bg-card: #1a2332;
+    --text-primary: #d0e8e4;
+    --text-body: #a8ccc6;
+    --text-dim: #5a8a82;
+    --text-muted: #3a6058;
+    --cyan: #56d4c8;
+    --cyan-bright: #7eeee4;
+    --cyan-dim: #2a9a90;
+    --teal: #3ab0a8;
+    --slate: #8a9caa;
+    --amber: #d4a056;
+    --amber-dim: #9a7040;
+    --rose: #d4567a;
+    --green: #56d488;
+    --purple: #a078d4;
+    --border: rgba(86, 212, 200, 0.10);
+    --border-light: rgba(86, 212, 200, 0.18);
+    --glow: rgba(86, 212, 200, 0.15);
+    --serif: 'Crimson Pro', Georgia, serif;
+    --sans: 'Manrope', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-body);
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.78;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 90vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; padding: 3rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 40% at 50% 45%, rgba(86,212,200,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 20% at 50% 80%, rgba(58,176,168,0.03) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: var(--mono); font-size: 0.68rem;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--cyan-dim); margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 600; line-height: 1.1;
+    color: var(--text-primary);
+    max-width: 18ch;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--cyan); }
+  .hero-sub {
+    font-family: var(--sans); font-size: 0.95rem;
+    font-weight: 300; color: var(--text-dim);
+    margin-top: 1.5rem; max-width: 42ch;
+    opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-byline {
+    font-family: var(--mono); font-size: 0.7rem;
+    color: var(--text-muted); margin-top: 2.5rem;
+    letter-spacing: 0.1em;
+    opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .hero-byline a { color: var(--cyan-dim); text-decoration: none; border-bottom: 1px solid var(--text-muted); }
+  .hero-byline a:hover { color: var(--cyan); border-color: var(--cyan); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── EPIGRAPH ── */
+  .epigraph {
+    border-left: 2px solid var(--cyan-dim);
+    padding: 1.2rem 0 1.2rem 1.8rem;
+    margin: 3rem 0;
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 1.02rem;
+  }
+  .epigraph cite {
+    display: block; margin-top: 0.6rem;
+    font-style: normal; font-family: var(--sans);
+    font-size: 0.78rem; color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SECTION ── */
+  section { padding: 2rem 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.6rem; font-weight: 500;
+    color: var(--text-primary);
+    margin: 2.5rem 0 1rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: var(--sans);
+    font-size: 0.92rem; font-weight: 500;
+    color: var(--cyan); letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 2rem 0 0.8rem;
+  }
+
+  p { margin-bottom: 1.2rem; }
+  p + p { text-indent: 0; }
+
+  em { color: var(--cyan-bright); font-style: italic; }
+  strong { color: var(--text-primary); font-weight: 600; }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid var(--border-light); }
+  a:hover { border-color: var(--cyan); }
+
+  /* ── MATH ── */
+  .math-block {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem 1.6rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-size: 1.1rem;
+    overflow-x: auto;
+  }
+  .katex { color: var(--text-primary); }
+  .katex .mord.text { color: var(--text-body); }
+
+  /* ── INTERACTIVE GRAPH ── */
+  .graph-wrap {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 2rem 0;
+    overflow: hidden;
+  }
+  .graph-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.8rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--sans); font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+  .graph-header .title { font-weight: 500; color: var(--text-body); }
+  .graph-canvas-wrap {
+    padding: 1rem;
+    position: relative;
+  }
+  canvas {
+    display: block; width: 100%; border-radius: 4px;
+    background: var(--bg-deep);
+  }
+  .graph-controls {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    padding: 0.8rem 1.2rem;
+    border-top: 1px solid var(--border);
+    align-items: center;
+  }
+  .graph-controls label {
+    font-family: var(--sans); font-size: 0.75rem;
+    color: var(--text-dim); display: flex;
+    align-items: center; gap: 0.4rem;
+  }
+  .graph-controls input[type="range"] {
+    width: 100px; accent-color: var(--cyan);
+  }
+  .graph-controls .val {
+    font-family: var(--mono); font-size: 0.72rem;
+    color: var(--cyan); min-width: 2.5em;
+  }
+  .graph-controls button {
+    font-family: var(--sans); font-size: 0.72rem;
+    background: var(--bg-elevated); color: var(--text-dim);
+    border: 1px solid var(--border-light); border-radius: 4px;
+    padding: 0.3rem 0.7rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .graph-controls button:hover, .graph-controls button.active {
+    background: var(--cyan-dim); color: var(--bg-deep);
+    border-color: var(--cyan);
+  }
+  .graph-caption {
+    padding: 0.6rem 1.2rem 0.8rem;
+    font-family: var(--sans); font-size: 0.75rem;
+    color: var(--text-muted); font-style: italic;
+  }
+  .legend-item {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-family: var(--sans); font-size: 0.72rem;
+    margin-right: 1rem;
+  }
+  .legend-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* ── PIE ANALOGY ── */
+  .analogy-box {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .analogy-box h4 {
+    font-family: var(--sans); font-size: 0.82rem;
+    font-weight: 500; color: var(--amber);
+    letter-spacing: 0.04em; margin-bottom: 0.8rem;
+  }
+  .pie-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .pie-col h5 {
+    font-family: var(--sans); font-size: 0.75rem;
+    color: var(--text-dim); margin-bottom: 0.5rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .pie-row {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin: 0.3rem 0;
+    font-family: var(--mono); font-size: 0.82rem;
+    color: var(--text-body);
+  }
+  .pie-icon { font-size: 1.2rem; }
+
+  /* ── FRAYER ── */
+  .frayer-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; margin: 1.5rem 0;
+  }
+  .frayer-cell {
+    background: var(--bg-elevated);
+    padding: 1.2rem;
+  }
+  .frayer-cell h4 {
+    font-family: var(--sans); font-size: 0.72rem;
+    font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  .frayer-cell.def h4 { color: var(--cyan); }
+  .frayer-cell.ex h4 { color: var(--green); }
+  .frayer-cell.nonex h4 { color: var(--rose); }
+  .frayer-cell.char h4 { color: var(--amber); }
+  .frayer-cell p, .frayer-cell ul {
+    font-size: 0.88rem; line-height: 1.6;
+    color: var(--text-body);
+  }
+  .frayer-cell ul { padding-left: 1.2rem; }
+  .frayer-cell li { margin: 0.2rem 0; }
+  .frayer-center {
+    grid-column: 1 / -1;
+    background: var(--bg-card);
+    text-align: center;
+    padding: 0.8rem;
+    font-family: var(--serif); font-size: 1.3rem;
+    font-weight: 600; color: var(--text-primary);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-family: var(--sans); font-size: 0.75rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  footer a { color: var(--cyan-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .container { padding: 0 1.2rem; }
+    .hero h1 { font-size: 2rem; }
+    .pie-grid, .frayer-grid { grid-template-columns: 1fr; }
+    .graph-controls { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="hero">
+  <div class="hero-label">McMurmerings &middot; Mathematics Education</div>
+  <h1>Duality of Mathematical <em>Reciprocity</em></h1>
+  <p class="hero-sub">On the multiple lives of the \({}^{-1}\) superscript, and why students have every right to be confused.</p>
+  <p class="hero-byline">Lee McCulloch-James &middot; 28 May 2019 &middot; <a href="https://mcmurmerings.wordpress.com/2019/05/28/reciprocity-in-mathematics/">original post</a></p>
+</header>
+
+<main class="container">
+
+<!-- ═══════════ EPIGRAPH ═══════════ -->
+<div class="epigraph">
+  Language is a tool, an instrument, and the history of tools suggests at least that it is not impossible by means of a blunt tool to produce a sharper one, and ultimately an instrument of very great precision.
+  <cite>H. Levy, <em>The Universe of Science</em>, Watts and Co.</cite>
+</div>
+
+<!-- ═══════════ INTRO ═══════════ -->
+<section>
+<p>I recently rather glibly introduced the idea of the <em>reciprocal</em> to my middle year maths class. Suffice I thought to present a couple of self-supporting statements that speak for themselves. Such are mathematical definitions, and such are apparent axioms in disguise.</p>
+
+<p>Firstly, revealing that which they didn't know that they knew, I elicited from them that a decimal number form is but:</p>
+
+<div class="math-block">
+$$365.23 = 3\times 10^2 + 6\times 10^1 + 5\times 10^0 + 2\times 10^{-1} + 3\times 10^{-2}$$
+</div>
+
+<p>That is, a set of placeholder multipliers of geometric series with ratio base 10. Then I announced the definition of reciprocal implicitly through:</p>
+
+<div class="math-block">
+$$a^{-1}\times a = 1 \qquad\text{and more generally}\qquad \frac{a}{b}\times\frac{b}{a} = 1$$
+</div>
+
+<p>A couple of instances, what more to say? It is what it is. But they baulk. A student declares "I don't understand, but we haven't been taught this before!" "Indeed, this is teaching. This is the new thing that is being taught!" What could be clearer than mathematics? That is, the bootstrapped self-expressive power of mathematical symbolism that generates such redundancy of teacher in its teaching.</p>
+</section>
+
+<!-- ═══════════ MISAPPROPRIATION ═══════════ -->
+<section>
+<h2>Mathematical Misappropriation</h2>
+
+<p>In teaching the mathematical sciences we often have to disentangle misconceptions borne of students' misappropriated <em>false friends</em>. Consider that energy is mostly conceived as phlogiston noun-like stuff, that weight as a noun is a universal measure of stuff's inertia.</p>
+
+<p>More pertinently here, consider Boyle's law for gases: if a given gas is subjected to pressure, the volume is halved if the pressure is doubled. There is, we say, a <em>reciprocal relation</em> between pressure and volume:</p>
+
+<div class="math-block">
+$$P = \frac{k}{V}$$
+</div>
+
+<!-- ── BOYLE'S LAW GRAPH ── -->
+<div class="graph-wrap" id="boyle-wrap">
+  <div class="graph-header">
+    <span class="title">Boyle's Law: \(P = k/V\)</span>
+    <span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--cyan)"></span> P(V)</span>
+    </span>
+  </div>
+  <div class="graph-canvas-wrap">
+    <canvas id="boyle-canvas" width="700" height="320"></canvas>
+  </div>
+  <div class="graph-controls">
+    <label>k = <input type="range" id="boyle-k" min="1" max="20" value="8" step="1"><span class="val" id="boyle-k-val">8</span></label>
+  </div>
+  <div class="graph-caption">The reciprocal hyperbola: halve V, double P. The constant k sets the scale of the gas sample.</div>
+</div>
+
+<p>Mathematical word appropriation may result from seeking to only obliquely reflect a word's vernacular meaning. Perhaps the source of student discombobulation was a category error: a mapping of what appeared to be a noun, the reciprocal \(\frac{b}{a}\), to the verb <em>reciprocate</em>, "a response to a gesture by making a corresponding one".</p>
+</section>
+
+<!-- ═══════════ PIE ANALOGY ═══════════ -->
+<section>
+<h2>The Pie Problem</h2>
+
+<p>Consider having one apple pie all to yourself. Then, noting a hungry neighbour, you cook another, thus <em>doubling</em> the number of pies, both of which you proceed to give to them.</p>
+
+<p>Reciprocation in a world that fetishises growth would entail my neighbour baking two pies themselves and returning the gesture. Reciprocation <em>mathematically</em>, rather modulates growth, behoving the neighbour to halve their too generous a gift, consuming one pie and returning the other.</p>
+
+<div class="analogy-box">
+  <h4>Growth vs Reciprocity</h4>
+  <div class="pie-grid">
+    <div class="pie-col">
+      <h5>Base 2 Growth</h5>
+      <div class="pie-row"><span class="pie-icon">&#127856;</span> 2<sup>1</sup> = 2</div>
+      <div class="pie-row"><span class="pie-icon">&#127856;&#127856;</span> 2<sup>2</sup> = 4</div>
+      <div class="pie-row"><span class="pie-icon">&#127856;&#127856;&#127856;&#127856;</span> 2<sup>3</sup> = 8</div>
+      <div class="pie-row"><span class="pie-icon" style="font-size:0.9rem">&#127856;&times;8</span> 2<sup>4</sup> = 16</div>
+    </div>
+    <div class="pie-col">
+      <h5>Mathematical Reciprocity</h5>
+      <div class="pie-row"><span class="pie-icon">&#127856;</span> 2<sup>0</sup> = 1</div>
+      <div class="pie-row"><span class="pie-icon" style="opacity:0.6">&#189;</span> 2<sup>&minus;1</sup> = 0.5</div>
+      <div class="pie-row"><span class="pie-icon" style="opacity:0.4">&#188;</span> 2<sup>&minus;2</sup> = 0.25</div>
+      <div class="pie-row"><span class="pie-icon" style="opacity:0.25">&#8539;</span> 2<sup>&minus;3</sup> = 0.125</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RECIPROCAL SERIES GRAPH ── -->
+<div class="graph-wrap" id="series-wrap">
+  <div class="graph-header">
+    <span class="title">Reciprocal Series: base \(b\) growth vs \(b^{-n}\)</span>
+    <span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--cyan)"></span> b<sup>&minus;n</sup></span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span> b<sup>n</sup></span>
+    </span>
+  </div>
+  <div class="graph-canvas-wrap">
+    <canvas id="series-canvas" width="700" height="360"></canvas>
+  </div>
+  <div class="graph-controls">
+    <label>base =
+      <button class="base-btn active" data-base="2">2</button>
+      <button class="base-btn" data-base="3">3</button>
+      <button class="base-btn" data-base="5">5</button>
+      <button class="base-btn" data-base="10">10</button>
+    </label>
+    <label>terms: <input type="range" id="series-n" min="2" max="8" value="5"><span class="val" id="series-n-val">5</span></label>
+  </div>
+  <div class="graph-caption">The 10-fingered base reciprocity shrinks division faster. Toggle bases to compare decay rates.</div>
+</div>
+</section>
+
+<!-- ═══════════ UNARY vs BINARY ═══════════ -->
+<section>
+<h3>When Unary trumps a Binary operator</h3>
+
+<p>In the LaTeX typesetting language the <em>unary</em> negative operator, as in \({-}x\), is distinguished from the <em>binary</em> operator in \(y - x\) by virtue of it being shorter and closer to the \(x\). We mask reciprocation of the subtraction binary \(-\) operation of "taking away":</p>
+
+<div class="math-block">
+$$1 - ({-}1) = 2 \qquad\text{versus}\qquad 1 + ({-}1) = 0$$
+</div>
+
+<p>The unary operator takes precedence and we write the addition of negative one as \(1{-}1\). "To take" is certainly the complement of "to give" but not really if the giving is a loan. Indeed is it its reciprocal?</p>
+
+<p>I have to date been wary of the division symbol \(\div\) as a binary operator, as it can hinder algebraic manipulation:</p>
+
+<div class="math-block">
+$$\frac{a}{b}\times x = 1 \qquad\text{versus}\qquad a \div b \times x = 1$$
+</div>
+
+<p>But the symbol \(\div\) has the virtue of emphasising the binary nature of the division process, encoding as it does the process of division within its noun form \(\frac{a}{b}\).</p>
+
+<p>This is apparent in standard form notation in which the reciprocal of \(1\times 10^3\) could just as well be denoted by \(1 \div 10^3\) as the usual \(1\times 10^{-3}\). Here the unity in front of the order of magnitude masks a confusion: one could justifiably argue that the expected way to write the reciprocal of \(4^{3/2}\) is the syntactically natural \((4^{3/2})^{-1}\) rather than the correct:</p>
+
+<div class="math-block">
+$$4^{(3/2)(-1)} = \frac{1}{4^{3/2}}$$
+</div>
+</section>
+
+<!-- ═══════════ INVERSE =/= RECIPROCAL ═══════════ -->
+<section>
+<h2>The Inverse Function is Not Reciprocal</h2>
+
+<p>Clearly \(1 \div x\) lacks the versatility of multiplicity that \(x^{-1}\) possesses in symbolising reciprocation. But perhaps this is a virtue? Akin as the latter is to the <em>inverse operation</em> applied to functions. That is, the mirror mapping (if its domain is suitably restricted) through the \(y = x\) line in which a function's co-domain becomes its inverse's domain.</p>
+
+<!-- ── SIN and ARCSIN GRAPH ── -->
+<div class="graph-wrap" id="trig-wrap">
+  <div class="graph-header">
+    <span class="title">Function &amp; Inverse: reflection through \(y = x\)</span>
+    <span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--cyan)"></span> f(x)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span> f<sup>&minus;1</sup>(x)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--text-muted)"></span> y=x</span>
+    </span>
+  </div>
+  <div class="graph-canvas-wrap">
+    <canvas id="trig-canvas" width="700" height="400"></canvas>
+  </div>
+  <div class="graph-controls">
+    <label>function:
+      <button class="trig-btn active" data-fn="sin">sin</button>
+      <button class="trig-btn" data-fn="tan">tan</button>
+      <button class="trig-btn" data-fn="x²">x²</button>
+      <button class="trig-btn" data-fn="eˣ">e<sup>x</sup></button>
+    </label>
+  </div>
+  <div class="graph-caption">The inverse function \(f^{-1}\) is the reflection through \(y = x\). Note: \(\sin^{-1}(x) \neq \frac{1}{\sin(x)}\). Hence the preference for \(\arcsin(x)\).</div>
+</div>
+
+<p>We have above the plots of the sine and tan functions that map angles to ratios, and their inverse functions designated as either \(\sin^{-1}x\) or \(\arcsin(x)\). You may conclude after this discussion that the latter is more appropriate.</p>
+</section>
+
+<!-- ═══════════ TAYLOR SERIES ═══════════ -->
+<section>
+<h3>Reciprocals within: The Taylor series of sin</h3>
+
+<p>We can see the deficiency of the word <em>reciprocal</em> in trying to describe the following construction: the sine function is but the limiting function of a polynomial Taylor series in which the coefficient of each power of (radian angle) \(x\) is the signed factorial of the <em>reciprocal</em> of the index of \(x\):</p>
+
+<div class="math-block">
+$$\sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots$$
+</div>
+
+<!-- ── TAYLOR SERIES GRAPH ── -->
+<div class="graph-wrap" id="taylor-wrap">
+  <div class="graph-header">
+    <span class="title">Taylor Approximation of \(\sin(x)\)</span>
+    <span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--cyan-bright)"></span> sin(x)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span> Taylor polynomial</span>
+    </span>
+  </div>
+  <div class="graph-canvas-wrap">
+    <canvas id="taylor-canvas" width="700" height="360"></canvas>
+  </div>
+  <div class="graph-controls">
+    <label>terms:
+      <button class="taylor-btn" data-n="1">1</button>
+      <button class="taylor-btn" data-n="2">2</button>
+      <button class="taylor-btn active" data-n="3">3</button>
+      <button class="taylor-btn" data-n="4">4</button>
+      <button class="taylor-btn" data-n="5">5</button>
+      <button class="taylor-btn" data-n="7">7</button>
+    </label>
+  </div>
+  <div class="graph-caption">Each additional term adds a higher power with a reciprocal-factorial coefficient. The polynomial oscillates ever closer to the true sine.</div>
+</div>
+</section>
+
+<!-- ═══════════ RECIPROCAL FUNCTION ═══════════ -->
+<section>
+<h2>Dueling with Reciprocity</h2>
+
+<p>To muddy the waters further we also reserve the designation <em>reciprocal</em> to that rational function \(\frac{ax+b}{cx+d}\), typically for \(b,d=0\) as in Boyle's law. It just about goes without saying that for \(a=c=1\) this is not the same as the inverse function, which is \(y=x\) itself.</p>
+
+<!-- ── RECIPROCAL vs INVERSE FUNCTION ── -->
+<div class="graph-wrap" id="recip-wrap">
+  <div class="graph-header">
+    <span class="title">The Reciprocal Function \(y = 1/x\) vs the Identity \(y = x\)</span>
+    <span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--cyan)"></span> y=1/x</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span> y=x</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--rose)"></span> 1/sin(x)</span>
+    </span>
+  </div>
+  <div class="graph-canvas-wrap">
+    <canvas id="recip-canvas" width="700" height="400"></canvas>
+  </div>
+  <div class="graph-controls">
+    <label>show:
+      <button class="recip-btn active" data-show="basic">1/x vs x</button>
+      <button class="recip-btn" data-show="csc">1/sin vs arcsin</button>
+    </label>
+  </div>
+  <div class="graph-caption">The reciprocal function \(y=1/x\) is its own inverse. But \(1/\sin(x)\) (the cosecant) is <em>not</em> \(\arcsin(x)\). The \({}^{-1}\) carries two meanings.</div>
+</div>
+</section>
+
+<!-- ═══════════ FRAYER MODEL ═══════════ -->
+<section>
+<h2>Saying What It Is Not</h2>
+
+<p>The Frayer model of designating non-examples to clarify meaning would usually recommend that I say what is <em>not</em> a reciprocal. The preceding suggests this is not so trivial.</p>
+
+<div class="frayer-grid">
+  <div class="frayer-center">Reciprocal&ensp;\({}^{-1}\)</div>
+  <div class="frayer-cell def">
+    <h4>Definition</h4>
+    <p>The multiplicative inverse: \(a^{-1}\times a = 1\). A number that, when multiplied by the original, yields unity.</p>
+  </div>
+  <div class="frayer-cell char">
+    <h4>Characteristics</h4>
+    <ul>
+      <li>Defined for all \(a \neq 0\)</li>
+      <li>The reciprocal of the reciprocal restores the original</li>
+      <li>\(\frac{a}{b} \leftrightarrow \frac{b}{a}\)</li>
+      <li>Creates hyperbolic decay: \(b^{-n}\to 0\)</li>
+    </ul>
+  </div>
+  <div class="frayer-cell ex">
+    <h4>Examples</h4>
+    <ul>
+      <li>\(3^{-1} = \frac{1}{3}\)</li>
+      <li>Boyle's law: \(P = k/V\)</li>
+      <li>Standard form: \(10^{-3} = 0.001\)</li>
+      <li>The function \(y = 1/x\)</li>
+    </ul>
+  </div>
+  <div class="frayer-cell nonex">
+    <h4>Non-Examples</h4>
+    <ul>
+      <li>\(\sin^{-1}(x) \neq 1/\sin(x)\)</li>
+      <li>Inverse function \(f^{-1}\) is reflection, not division</li>
+      <li>Vernacular reciprocation (returning a favour "in kind")</li>
+      <li>The additive inverse \(-a\)</li>
+    </ul>
+  </div>
+</div>
+
+<p>I begin to see now why the word <em>Dual</em> is so ubiquitous in mathematics: it is a suitably ephemeral word for some sort of complementary correspondence.</p>
+</section>
+
+</main>
+
+<footer>
+  <p>Interactive companion to <a href="https://mcmurmerings.wordpress.com/2019/05/28/reciprocity-in-mathematics/">Duality of Mathematical Reciprocity</a> &middot; McMurmerings</p>
+</footer>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // KaTeX auto-render
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '\\(', right: '\\)', display: false}
+    ]
+  });
+
+  // ── Utility ──
+  const dpr = window.devicePixelRatio || 1;
+  function setupCanvas(id) {
+    const c = document.getElementById(id);
+    const rect = c.getBoundingClientRect();
+    c.width = rect.width * dpr;
+    c.height = rect.height * dpr;
+    const ctx = c.getContext('2d');
+    ctx.scale(dpr, dpr);
+    return { c, ctx, w: rect.width, h: rect.height };
+  }
+
+  const colors = {
+    cyan: '#56d4c8', cyanBright: '#7eeee4', amber: '#d4a056',
+    rose: '#d4567a', green: '#56d488', purple: '#a078d4',
+    muted: '#3a6058', grid: 'rgba(86,212,200,0.08)',
+    gridStrong: 'rgba(86,212,200,0.15)', text: '#5a8a82', axis: '#2a9a90'
+  };
+
+  function drawGrid(ctx, w, h, ox, oy, sx, sy, xMin, xMax, yMin, yMax) {
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 0.5;
+    // vertical
+    for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+      if (x === 0) continue;
+      const px = ox + x * sx;
+      ctx.beginPath(); ctx.moveTo(px, 10); ctx.lineTo(px, h - 10); ctx.stroke();
+    }
+    // horizontal
+    for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+      if (y === 0) continue;
+      const py = oy - y * sy;
+      ctx.beginPath(); ctx.moveTo(10, py); ctx.lineTo(w - 10, py); ctx.stroke();
+    }
+    // axes
+    ctx.strokeStyle = colors.axis; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(10, oy); ctx.lineTo(w - 10, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, 10); ctx.lineTo(ox, h - 10); ctx.stroke();
+    // tick labels
+    ctx.fillStyle = colors.text; ctx.font = '11px Manrope, sans-serif'; ctx.textAlign = 'center';
+    for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+      if (x === 0) continue;
+      ctx.fillText(x, ox + x * sx, oy + 15);
+    }
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+      if (y === 0) continue;
+      ctx.fillText(y, ox - 8, oy - y * sy);
+    }
+  }
+
+  function plotCurve(ctx, ox, oy, sx, sy, xMin, xMax, fn, color, lw = 2, yClip = 200) {
+    ctx.strokeStyle = color; ctx.lineWidth = lw;
+    ctx.beginPath();
+    let started = false;
+    const steps = 500;
+    const dx = (xMax - xMin) / steps;
+    for (let i = 0; i <= steps; i++) {
+      const x = xMin + i * dx;
+      const y = fn(x);
+      if (!isFinite(y) || Math.abs(y) > yClip) { started = false; continue; }
+      const px = ox + x * sx, py = oy - y * sy;
+      if (!started) { ctx.moveTo(px, py); started = true; }
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+  }
+
+  // ════════════ BOYLE'S LAW ════════════
+  function drawBoyle() {
+    const { ctx, w, h } = setupCanvas('boyle-canvas');
+    const k = +document.getElementById('boyle-k').value;
+    document.getElementById('boyle-k-val').textContent = k;
+
+    const xMin = 0.2, xMax = 10, yMax = k / xMin * 0.6;
+    const margin = { l: 45, r: 20, t: 15, b: 30 };
+    const pw = w - margin.l - margin.r, ph = h - margin.t - margin.b;
+    const sx = pw / (xMax - xMin), sy = ph / yMax;
+    const ox = margin.l - xMin * sx, oy = h - margin.b;
+
+    ctx.clearRect(0, 0, w, h);
+    // grid
+    ctx.strokeStyle = colors.grid; ctx.lineWidth = 0.5;
+    for (let v = 1; v <= 10; v++) {
+      const px = ox + v * sx;
+      ctx.beginPath(); ctx.moveTo(px, margin.t); ctx.lineTo(px, oy); ctx.stroke();
+    }
+    for (let p = 2; p < yMax; p += 2) {
+      const py = oy - p * sy;
+      if (py < margin.t) break;
+      ctx.beginPath(); ctx.moveTo(margin.l, py); ctx.lineTo(w - margin.r, py); ctx.stroke();
+    }
+    // axis
+    ctx.strokeStyle = colors.axis; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(margin.l, oy); ctx.lineTo(w - margin.r, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(margin.l, oy); ctx.lineTo(margin.l, margin.t); ctx.stroke();
+    // labels
+    ctx.fillStyle = colors.text; ctx.font = '11px Manrope, sans-serif';
+    ctx.textAlign = 'center';
+    for (let v = 2; v <= 10; v += 2) ctx.fillText(v, ox + v * sx, oy + 15);
+    ctx.textAlign = 'right';
+    for (let p = 2; p < yMax; p += 2) {
+      const py = oy - p * sy;
+      if (py < margin.t) break;
+      ctx.fillText(p, margin.l - 6, py + 4);
+    }
+    // axis titles
+    ctx.fillStyle = colors.muted; ctx.font = '12px Manrope, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Volume V', w / 2, h - 3);
+    ctx.save(); ctx.translate(12, h / 2); ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Pressure P', 0, 0); ctx.restore();
+
+    // curve
+    ctx.strokeStyle = colors.cyan; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let i = 0; i <= 400; i++) {
+      const v = xMin + (xMax - xMin) * i / 400;
+      const p = k / v;
+      const px = ox + v * sx, py = oy - p * sy;
+      if (py < margin.t) continue;
+      if (i === 0 || py < margin.t) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // annotation: show a point
+    const v0 = 2, p0 = k / v0;
+    const v1 = 4, p1 = k / v1;
+    [{ v: v0, p: p0 }, { v: v1, p: p1 }].forEach(({ v, p }) => {
+      const px = ox + v * sx, py = oy - p * sy;
+      if (py < margin.t) return;
+      ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2);
+      ctx.fillStyle = colors.cyan; ctx.fill();
+      ctx.fillStyle = colors.cyanBright; ctx.font = '11px JetBrains Mono, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`(${v}, ${p.toFixed(1)})`, px + 8, py - 6);
+    });
+    // dashed lines between them
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(86,212,200,0.3)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(ox + v0 * sx, oy - p0 * sy); ctx.lineTo(ox + v0 * sx, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox + v1 * sx, oy - p1 * sy); ctx.lineTo(ox + v1 * sx, oy); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  document.getElementById('boyle-k').addEventListener('input', drawBoyle);
+  drawBoyle();
+
+  // ════════════ RECIPROCAL SERIES ════════════
+  let seriesBase = 2;
+  function drawSeries() {
+    const { ctx, w, h } = setupCanvas('series-canvas');
+    const n = +document.getElementById('series-n').value;
+    document.getElementById('series-n-val').textContent = n;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // split canvas: left = growth, right = reciprocal
+    const midX = w / 2;
+    const margin = { l: 50, r: 20, t: 20, b: 35 };
+
+    // ── Left panel: growth b^n ──
+    const maxGrowth = Math.pow(seriesBase, n);
+    const barW = (midX - margin.l - 30) / (n + 1);
+
+    ctx.fillStyle = colors.text; ctx.font = '11px Manrope, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Growth: b\u207f', midX / 2, 14);
+
+    const gH = h - margin.t - margin.b;
+    for (let i = 0; i <= n; i++) {
+      const val = Math.pow(seriesBase, i);
+      const bh = (val / maxGrowth) * gH * 0.9;
+      const x = margin.l + i * barW + 4;
+      const y = h - margin.b - bh;
+      ctx.fillStyle = colors.amber + '90';
+      ctx.fillRect(x, y, barW - 8, bh);
+      ctx.fillStyle = colors.amber;
+      ctx.font = '10px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${seriesBase}^${i}`, x + (barW - 8) / 2, h - margin.b + 13);
+      ctx.fillText(val.toFixed(val < 1 ? 3 : 0), x + (barW - 8) / 2, y - 5);
+    }
+
+    // ── Right panel: reciprocal b^-n ──
+    ctx.fillStyle = colors.text; ctx.font = '11px Manrope, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Reciprocal: b\u207B\u207f', midX + (w - midX) / 2, 14);
+
+    const rBarW = (w - midX - margin.r - 30) / (n + 1);
+    for (let i = 0; i <= n; i++) {
+      const val = Math.pow(seriesBase, -i);
+      const bh = val * gH * 0.9;
+      const x = midX + 20 + i * rBarW + 4;
+      const y = h - margin.b - bh;
+      ctx.fillStyle = colors.cyan + '90';
+      ctx.fillRect(x, y, rBarW - 8, bh);
+      ctx.fillStyle = colors.cyan;
+      ctx.font = '10px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      const label = i === 0 ? `${seriesBase}^0` : `${seriesBase}^-${i}`;
+      ctx.fillText(label, x + (rBarW - 8) / 2, h - margin.b + 13);
+      ctx.fillText(val.toFixed(Math.min(i + 1, 4)), x + (rBarW - 8) / 2, y - 5);
+    }
+
+    // divider
+    ctx.strokeStyle = colors.grid; ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(midX, margin.t); ctx.lineTo(midX, h - 10); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  document.querySelectorAll('.base-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.base-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      seriesBase = +btn.dataset.base;
+      drawSeries();
+    });
+  });
+  document.getElementById('series-n').addEventListener('input', drawSeries);
+  drawSeries();
+
+  // ════════════ TRIG INVERSE GRAPH ════════════
+  let trigFn = 'sin';
+  function drawTrig() {
+    const { ctx, w, h } = setupCanvas('trig-canvas');
+    ctx.clearRect(0, 0, w, h);
+
+    let xRange, yRange, fn, inv, fnLabel, invLabel;
+    switch (trigFn) {
+      case 'sin':
+        xRange = [-4, 4]; yRange = [-4, 4];
+        fn = Math.sin; inv = Math.asin;
+        fnLabel = 'sin(x)'; invLabel = 'arcsin(x)';
+        break;
+      case 'tan':
+        xRange = [-3, 3]; yRange = [-3, 3];
+        fn = Math.tan; inv = Math.atan;
+        fnLabel = 'tan(x)'; invLabel = 'arctan(x)';
+        break;
+      case 'x²':
+        xRange = [-3, 3]; yRange = [-1, 5];
+        fn = x => x * x; inv = x => x >= 0 ? Math.sqrt(x) : NaN;
+        fnLabel = 'x²'; invLabel = '√x';
+        break;
+      case 'eˣ':
+        xRange = [-3, 3]; yRange = [-3, 3];
+        fn = Math.exp; inv = Math.log;
+        fnLabel = 'eˣ'; invLabel = 'ln(x)';
+        break;
+    }
+
+    const margin = { l: 40, r: 20, t: 20, b: 30 };
+    const pw = w - margin.l - margin.r, ph = h - margin.t - margin.b;
+    const sx = pw / (xRange[1] - xRange[0]);
+    const sy = ph / (yRange[1] - yRange[0]);
+    const ox = margin.l - xRange[0] * sx;
+    const oy = h - margin.b + yRange[0] * sy;
+
+    drawGrid(ctx, w, h, ox, oy, sx, sy, xRange[0], xRange[1], yRange[0], yRange[1]);
+
+    // y=x line
+    ctx.strokeStyle = colors.muted; ctx.lineWidth = 1;
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    const lineMin = Math.max(xRange[0], yRange[0]), lineMax = Math.min(xRange[1], yRange[1]);
+    ctx.moveTo(ox + lineMin * sx, oy - lineMin * sy);
+    ctx.lineTo(ox + lineMax * sx, oy - lineMax * sy);
+    ctx.stroke(); ctx.setLineDash([]);
+
+    // f(x)
+    plotCurve(ctx, ox, oy, sx, sy, xRange[0], xRange[1], fn, colors.cyan, 2.5, yRange[1] + 2);
+    // f^-1(x)
+    plotCurve(ctx, ox, oy, sx, sy, xRange[0], xRange[1], inv, colors.amber, 2.5, yRange[1] + 2);
+
+    // labels
+    ctx.font = '13px JetBrains Mono, monospace';
+    ctx.fillStyle = colors.cyan; ctx.textAlign = 'left';
+    ctx.fillText(fnLabel, w - margin.r - 80, margin.t + 20);
+    ctx.fillStyle = colors.amber;
+    ctx.fillText(invLabel, w - margin.r - 80, margin.t + 38);
+    ctx.fillStyle = colors.muted;
+    ctx.fillText('y = x', w - margin.r - 80, margin.t + 56);
+  }
+  document.querySelectorAll('.trig-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.trig-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      trigFn = btn.dataset.fn;
+      drawTrig();
+    });
+  });
+  drawTrig();
+
+  // ════════════ TAYLOR SERIES ════════════
+  let taylorN = 3;
+  function factorial(n) { let r = 1; for (let i = 2; i <= n; i++) r *= i; return r; }
+  function taylorSin(x, terms) {
+    let s = 0;
+    for (let k = 0; k < terms; k++) {
+      const n = 2 * k + 1;
+      s += Math.pow(-1, k) * Math.pow(x, n) / factorial(n);
+    }
+    return s;
+  }
+
+  function drawTaylor() {
+    const { ctx, w, h } = setupCanvas('taylor-canvas');
+    ctx.clearRect(0, 0, w, h);
+
+    const xRange = [-4 * Math.PI / 3, 4 * Math.PI / 3];
+    const yRange = [-2.5, 2.5];
+    const margin = { l: 40, r: 20, t: 15, b: 30 };
+    const pw = w - margin.l - margin.r, ph = h - margin.t - margin.b;
+    const sx = pw / (xRange[1] - xRange[0]);
+    const sy = ph / (yRange[1] - yRange[0]);
+    const ox = margin.l - xRange[0] * sx;
+    const oy = h - margin.b + yRange[0] * sy;
+
+    // grid
+    ctx.strokeStyle = colors.grid; ctx.lineWidth = 0.5;
+    [-Math.PI, -Math.PI / 2, Math.PI / 2, Math.PI].forEach(x => {
+      const px = ox + x * sx;
+      ctx.beginPath(); ctx.moveTo(px, margin.t); ctx.lineTo(px, h - margin.b); ctx.stroke();
+    });
+    for (let y = -2; y <= 2; y++) {
+      if (y === 0) continue;
+      const py = oy - y * sy;
+      ctx.beginPath(); ctx.moveTo(margin.l, py); ctx.lineTo(w - margin.r, py); ctx.stroke();
+    }
+    // axes
+    ctx.strokeStyle = colors.axis; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(margin.l, oy); ctx.lineTo(w - margin.r, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, margin.t); ctx.lineTo(ox, h - margin.b); ctx.stroke();
+    // tick labels
+    ctx.fillStyle = colors.text; ctx.font = '11px Manrope, sans-serif'; ctx.textAlign = 'center';
+    [[-Math.PI, '-π'], [-Math.PI/2, '-π/2'], [Math.PI/2, 'π/2'], [Math.PI, 'π']].forEach(([x, lbl]) => {
+      ctx.fillText(lbl, ox + x * sx, oy + 15);
+    });
+
+    // sin(x) - true
+    plotCurve(ctx, ox, oy, sx, sy, xRange[0], xRange[1], Math.sin, colors.cyanBright, 2, 5);
+
+    // Taylor polynomial
+    plotCurve(ctx, ox, oy, sx, sy, xRange[0], xRange[1], x => taylorSin(x, taylorN), colors.amber, 2.5, 5);
+
+    // label showing polynomial degree
+    const deg = 2 * taylorN - 1;
+    ctx.font = '12px JetBrains Mono, monospace';
+    ctx.fillStyle = colors.amber; ctx.textAlign = 'right';
+    ctx.fillText(`degree ${deg} polynomial (${taylorN} terms)`, w - margin.r - 5, margin.t + 18);
+  }
+  document.querySelectorAll('.taylor-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.taylor-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      taylorN = +btn.dataset.n;
+      drawTaylor();
+    });
+  });
+  drawTaylor();
+
+  // ════════════ RECIPROCAL vs INVERSE ════════════
+  let recipMode = 'basic';
+  function drawRecip() {
+    const { ctx, w, h } = setupCanvas('recip-canvas');
+    ctx.clearRect(0, 0, w, h);
+
+    const xRange = [-5, 5], yRange = [-5, 5];
+    const margin = { l: 40, r: 20, t: 15, b: 30 };
+    const pw = w - margin.l - margin.r, ph = h - margin.t - margin.b;
+    const sx = pw / (xRange[1] - xRange[0]);
+    const sy = ph / (yRange[1] - yRange[0]);
+    const ox = margin.l - xRange[0] * sx;
+    const oy = h - margin.b + yRange[0] * sy;
+
+    drawGrid(ctx, w, h, ox, oy, sx, sy, xRange[0], xRange[1], yRange[0], yRange[1]);
+
+    if (recipMode === 'basic') {
+      // y = x (identity / inverse of x)
+      plotCurve(ctx, ox, oy, sx, sy, xRange[0], xRange[1], x => x, colors.amber, 2, 10);
+      // y = 1/x (reciprocal)
+      plotCurve(ctx, ox, oy, sx, sy, xRange[0], -0.05, x => 1 / x, colors.cyan, 2.5, 10);
+      plotCurve(ctx, ox, oy, sx, sy, 0.05, xRange[1], x => 1 / x, colors.cyan, 2.5, 10);
+
+      ctx.font = '13px JetBrains Mono, monospace'; ctx.textAlign = 'left';
+      ctx.fillStyle = colors.cyan; ctx.fillText('y = 1/x', w - 100, margin.t + 20);
+      ctx.fillStyle = colors.amber; ctx.fillText('y = x', w - 100, margin.t + 38);
+    } else {
+      // 1/sin(x) = csc(x)
+      plotCurve(ctx, ox, oy, sx, sy, xRange[0], xRange[1], x => 1 / Math.sin(x), colors.rose, 2, 8);
+      // arcsin(x)
+      plotCurve(ctx, ox, oy, sx, sy, -1, 1, Math.asin, colors.amber, 2.5, 10);
+      // sin(x) for reference
+      plotCurve(ctx, ox, oy, sx, sy, xRange[0], xRange[1], Math.sin, colors.cyan, 1.5, 10);
+
+      ctx.font = '12px JetBrains Mono, monospace'; ctx.textAlign = 'left';
+      ctx.fillStyle = colors.rose; ctx.fillText('1/sin(x) = csc(x)', w - 160, margin.t + 20);
+      ctx.fillStyle = colors.amber; ctx.fillText('arcsin(x)', w - 160, margin.t + 38);
+      ctx.fillStyle = colors.cyan; ctx.fillText('sin(x)', w - 160, margin.t + 56);
+    }
+  }
+  document.querySelectorAll('.recip-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.recip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      recipMode = btn.dataset.show;
+      drawRecip();
+    });
+  });
+  drawRecip();
+
+  // ── Resize handler ──
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      drawBoyle(); drawSeries(); drawTrig(); drawTaylor(); drawRecip();
+    }, 150);
+  });
+});
+</script>
+</body>
+</html>
