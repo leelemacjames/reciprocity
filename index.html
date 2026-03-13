@@ -505,59 +505,6 @@ $$4^{(3/2)(-1)} = \frac{1}{4^{3/2}}$$
 
 <p>We have above the plots of the sine and tan functions that map angles to ratios, and their inverse functions designated as either \(\sin^{-1}x\) or \(\arcsin(x)\). You may conclude after this discussion that the latter is more appropriate.</p>
 
-<h3>A warning: the symbol grows more abstract</h3>
-
-<p>At this point one might warn students that the notation \(a^{-1}\) begins life looking like a simple reciprocal, but steadily acquires greater abstraction. In school arithmetic it is natural to read \(2^{-1}\) as \(\frac12\). But in later mathematics the same superscript no longer means “turn upside down” in any naive sense. Rather, it denotes the element that undoes multiplication <em>within the structure currently under discussion</em>.</p>
-
-<p>Number theory gives a particularly sharp example. In arithmetic modulo \(7\), the inverse of \(3\) is not \(\frac13\), but \(5\), because:</p>
-
-<div class="math-block">
-$$3 \times 5 = 15 \equiv 1 \pmod 7$$
-</div>
-
-<p>Thus one writes:</p>
-
-<div class="math-block">
-$$3^{-1} \equiv 5 \pmod 7$$
-</div>
-
-<p>Yet this same symbolism can fail altogether. Modulo \(14\), the number \(6\) has no inverse, because no multiple of \(6\) leaves remainder \(1\):</p>
-
-<div class="math-block">
-$$6,\,12,\,18,\,24,\,30,\dots \equiv 6,\,12,\,4,\,10,\,2,\dots \pmod{14}$$
-</div>
-
-<p>We cycle through even residues only, never reaching \(1\). Equivalently, \(6\) and \(14\) share a factor, so \(6\) is not invertible modulo \(14\).</p>
-
-<p>This points toward the more general algebraic idea of a <em>unit</em>. In any ring, a unit is an element that possesses a multiplicative inverse within that ring. So in the rationals every non-zero number is a unit, and \(2^{-1}=\frac12\). But in the integers only \(1\) and \(-1\) are units. In modular arithmetic, only those residue classes coprime to the modulus are units.</p>
-
-<div class="math-block">
-$$a^{-1}\text{ only makes sense if }a\text{ is a unit in the structure we are working in.}$$
-</div>
-
-<p>So the notation \(a^{-1}\) does not, in general, mean <em>reciprocal</em>. It means the multiplicative inverse <em>within the current algebraic structure</em>. And that structure might be the integers, the rationals, modular arithmetic, matrices, permutations, or functions. Each gives the superscript \({}^{-1}\) a different life.</p>
-
-<p>Matrices make this especially vivid. Consider:</p>
-
-<div class="math-block">
-$$A=\begin{pmatrix}1&1\\0&1\end{pmatrix}$$
-</div>
-
-<p>Its inverse is:</p>
-
-<div class="math-block">
-$$A^{-1}=\begin{pmatrix}1&-1\\0&1\end{pmatrix}$$
-</div>
-
-<p>Here the inverse is certainly not a reciprocal in the schoolroom sense. It exists because the determinant is \(1\):</p>
-
-<div class="math-block">
-$$\det(A)=1$$
-</div>
-
-<p>That is, the matrix is invertible, indeed unimodular, so its inverse remains within the integer matrices. The symbol survives, but the meaning has become structural rather than merely arithmetic.</p>
-</section>
-
 <!-- ═══════════ TAYLOR SERIES ═══════════ -->
 <section>
 <h3>Reciprocals within: The Taylor series of sin</h3>
@@ -621,6 +568,58 @@ $$\sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots$$
   </div>
   <div class="graph-caption">The reciprocal function \(y=1/x\) is its own inverse. But \(1/\sin(x)\) (the cosecant) is <em>not</em> \(\arcsin(x)\). The \({}^{-1}\) carries two meanings.</div>
 </div>
+</section>
+<h3>A warning: the symbol grows more abstract</h3>
+
+<p>At this point one might warn students that the notation \(a^{-1}\) begins life looking like a simple reciprocal, but steadily acquires greater abstraction. In school arithmetic it is natural to read \(2^{-1}\) as \(\frac12\). But in later mathematics the same superscript no longer means “turn upside down” in any naive sense. Rather, it denotes the element that undoes multiplication <em>within the structure currently under discussion</em>.</p>
+
+<p>Number theory gives a particularly sharp example. In arithmetic modulo \(7\), the inverse of \(3\) is not \(\frac13\), but \(5\), because:</p>
+
+<div class="math-block">
+$$3 \times 5 = 15 \equiv 1 \pmod 7$$
+</div>
+
+<p>Thus one writes:</p>
+
+<div class="math-block">
+$$3^{-1} \equiv 5 \pmod 7$$
+</div>
+
+<p>Yet this same symbolism can fail altogether. Modulo \(14\), the number \(6\) has no inverse, because no multiple of \(6\) leaves remainder \(1\):</p>
+
+<div class="math-block">
+$$6,\,12,\,18,\,24,\,30,\dots \equiv 6,\,12,\,4,\,10,\,2,\dots \pmod{14}$$
+</div>
+
+<p>We cycle through even residues only, never reaching \(1\). Equivalently, \(6\) and \(14\) share a factor, so \(6\) is not invertible modulo \(14\).</p>
+
+<p>This points toward the more general algebraic idea of a <em>unit</em>. In any ring, a unit is an element that possesses a multiplicative inverse within that ring. So in the rationals every non-zero number is a unit, and \(2^{-1}=\frac12\). But in the integers only \(1\) and \(-1\) are units. In modular arithmetic, only those residue classes coprime to the modulus are units.</p>
+
+<div class="math-block">
+$$a^{-1}\text{ only makes sense if }a\text{ is a unit in the structure we are working in.}$$
+</div>
+
+<p>So the notation \(a^{-1}\) does not, in general, mean <em>reciprocal</em>. It means the multiplicative inverse <em>within the current algebraic structure</em>. And that structure might be the integers, the rationals, modular arithmetic, matrices, permutations, or functions. Each gives the superscript \({}^{-1}\) a different life.</p>
+
+<p>Matrices make this especially vivid. Consider:</p>
+
+<div class="math-block">
+$$A=\begin{pmatrix}1&1\\0&1\end{pmatrix}$$
+</div>
+
+<p>Its inverse is:</p>
+
+<div class="math-block">
+$$A^{-1}=\begin{pmatrix}1&-1\\0&1\end{pmatrix}$$
+</div>
+
+<p>Here the inverse is certainly not a reciprocal in the schoolroom sense. It exists because the determinant is \(1\):</p>
+
+<div class="math-block">
+$$\det(A)=1$$
+</div>
+
+<p>That is, the matrix is invertible, indeed unimodular, so its inverse remains within the integer matrices. The symbol survives, but the meaning has become structural rather than merely arithmetic.</p>
 </section>
 
 <!-- ═══════════ FRAYER MODEL ═══════════ -->
