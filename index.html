@@ -601,8 +601,7 @@ $$a^{-1}\text{ only makes sense if }a\text{ is a unit in the structure we are wo
 
 <p>So the notation \(a^{-1}\) does not, in general, mean <em>reciprocal</em>. It means the multiplicative inverse <em>within the current algebraic structure</em>. And that structure might be the integers, the rationals, modular arithmetic, matrices, permutations, or functions. Each gives the superscript \({}^{-1}\) a different life.</p>
 
-<p>Matrices make this especially vivid. Consider:</p>
-
+<p>Matrices make this especially vivid. Consider the shear matrix</p>
 <div class="math-block">
 $$A=\begin{pmatrix}1&1\\0&1\end{pmatrix}$$
 </div>
@@ -613,56 +612,67 @@ $$A=\begin{pmatrix}1&1\\0&1\end{pmatrix}$$
 $$A^{-1}=\begin{pmatrix}1&-1\\0&1\end{pmatrix}$$
 </div>
 
-<p>Here the inverse is certainly not a reciprocal in the schoolroom sense. It exists because the determinant is \(1\):</p>
+<p>Here the inverse is certainly not a reciprocal in the schoolroom sense. The matrix is invertible because its determinant is</p>
 
 <div class="math-block">
 $$\det(A)=1$$
 </div>
 
-<p>That is, the matrix is invertible, indeed unimodular, so its inverse remains within the integer matrices. The symbol survives, but the meaning has become structural rather than merely arithmetic.</p>
+<p>The determinant measures how a linear transformation scales area. A determinant of \(0\) collapses the plane and cannot be undone, but any non-zero determinant means the transformation is reversible. When the determinant is \(1\), the transformation preserves area exactly.</p>
+
+<p>In this case the inverse matrix also has integer entries. Such matrices are called <em>unimodular</em>, and they form part of the group \(SL(2,\mathbb{Z})\). In this setting the superscript \(^{-1}\) denotes the inverse within a structural group of units rather than any notion of reciprocal division.</p>
+
+<p>The symbol survives, but the meaning has become structural rather than merely arithmetic.</p>
 </section>
 
 <!-- ═══════════ FRAYER MODEL ═══════════ -->
 <section>
 <h2>Saying What It Is Not</h2>
 
-<p>The Frayer model of designating non-examples to clarify meaning would usually recommend that I say what is <em>not</em> a reciprocal. The preceding suggests this is not so trivial.</p>
+<p>The Frayer model of designating non-examples to clarify meaning would usually recommend that I say what is <em>not</em> a reciprocal. The preceding discussion suggests the matter is subtler: the superscript \(^{-1}\) survives across many mathematical structures, but its meaning shifts with the structure in which it lives.</p>
 
 <div class="frayer-grid">
-  <div class="frayer-center">Reciprocal&ensp;\({}^{-1}\)</div>
+  <div class="frayer-center">Inverse / Reciprocal&ensp;\({}^{-1}\)</div>
+
   <div class="frayer-cell def">
     <h4>Definition</h4>
-    <p>The multiplicative inverse: \(a^{-1}\times a = 1\). A number that, when multiplied by the original, yields unity.</p>
+    <p>The multiplicative inverse: an element \(a^{-1}\) satisfying</p>
+    <div class="math-block">
+    $$a^{-1}a=1$$
+    </div>
+    <p>within the algebraic structure being considered.</p>
   </div>
+
   <div class="frayer-cell char">
     <h4>Characteristics</h4>
     <ul>
-      <li>Defined only when \(a\) is a unit in the structure under discussion</li>
-      <li>The reciprocal of the reciprocal restores the original</li>
-      <li>\(\frac{a}{b} \leftrightarrow \frac{b}{a}\)</li>
-      <li>Creates hyperbolic decay: \(b^{-n}\to 0\)</li>
+      <li>Defined only when \(a\) is a <em>unit</em> in the structure</li>
+      <li>The inverse of the inverse restores the original</li>
+      <li>Represents the element that <em>undoes multiplication</em></li>
+      <li>The meaning depends on the surrounding mathematical system</li>
     </ul>
   </div>
+
   <div class="frayer-cell ex">
     <h4>Examples</h4>
     <ul>
-      <li>\(3^{-1}=\frac{1}{3}\) in \(\mathbb{Q}\), but \(3^{-1}\equiv 5 \pmod 7\)</li>
-      <li>Boyle's law: \(P = k/V\)</li>
-      <li>Standard form: \(10^{-3} = 0.001\)</li>
-      <li>The function \(y = 1/x\)</li>
+      <li>\(3^{-1}=\frac{1}{3}\) in the rationals \(\mathbb{Q}\)</li>
+      <li>\(3^{-1}\equiv5 \pmod7\) in modular arithmetic</li>
+      <li>The function \(y=1/x\)</li>
+      <li>A unimodular matrix with \(\det(A)=1\)</li>
     </ul>
   </div>
+
   <div class="frayer-cell nonex">
     <h4>Non-Examples</h4>
     <ul>
-      <li>\(\sin^{-1}(x) \neq 1/\sin(x)\)</li>
-      <li>Inverse function \(f^{-1}\) is reflection, not division</li>
-      <li>Vernacular reciprocation (returning a favour "in kind")</li>
+      <li>\(\sin^{-1}(x)\neq 1/\sin(x)\)</li>
+      <li>Inverse functions are reflections, not divisions</li>
       <li>The additive inverse \(-a\)</li>
+      <li>Vernacular “reciprocation” (returning a favour)</li>
     </ul>
   </div>
 </div>
-
 <p>I begin to see now why the word <em>Dual</em> is so ubiquitous in mathematics: it is a suitably ephemeral word for some sort of complementary correspondence.</p>
 </section>
 
